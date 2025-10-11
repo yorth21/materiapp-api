@@ -14,12 +14,12 @@ export class Student {
   names: string;
 
   @Column({ type: 'varchar', length: 255, unique: true, nullable: true })
-  email: string;
+  email: string | null;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255 })
   password: string;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'int' })
   semester: number;
 
   @Column({ type: 'boolean', default: true, name: 'is_active' })
