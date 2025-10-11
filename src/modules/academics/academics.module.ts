@@ -1,0 +1,36 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+// Entities
+import { Campus } from './entities/campus.entity';
+import { Program } from './entities/program.entity';
+import { School } from './entities/school.entity';
+import { Student } from './entities/student.entity';
+
+// Controllers
+import { CampusesController } from './controllers/campuses.controller';
+import { ProgramsController } from './controllers/programs.controller';
+import { SchoolsController } from './controllers/schools.controller';
+import { StudentsController } from './controllers/students.controller';
+
+// Services
+import { CampusesService } from './services/campuses.service';
+import { ProgramsService } from './services/programs.service';
+import { SchoolsService } from './services/schools.service';
+import { StudentsService } from './services/students.service';
+
+@Module({
+  imports: [TypeOrmModule.forFeature([Campus, Program, School, Student])],
+  controllers: [
+    CampusesController,
+    ProgramsController,
+    SchoolsController,
+    StudentsController,
+  ],
+  providers: [
+    CampusesService,
+    ProgramsService,
+    SchoolsService,
+    StudentsService,
+  ],
+})
+export class AcademicsModule {}

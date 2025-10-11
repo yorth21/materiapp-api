@@ -3,10 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Env } from './env.model';
 import { UsersModule } from './modules/users/users.module';
-import { StudentsModule } from './modules/students/students.module';
-import { SchoolsModule } from './modules/schools/schools.module';
-import { CampusesModule } from './modules/campuses/campuses.module';
-import { ProgramsModule } from './modules/programs/programs.module';
+import { AcademicsModule } from './modules/academics/academics.module';
 
 @Module({
   imports: [
@@ -27,10 +24,7 @@ import { ProgramsModule } from './modules/programs/programs.module';
       inject: [ConfigService],
     }),
     UsersModule,
-    StudentsModule,
-    SchoolsModule,
-    CampusesModule,
-    ProgramsModule,
+    AcademicsModule,
   ],
 })
 export class AppModule {}
