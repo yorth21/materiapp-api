@@ -3,9 +3,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { School } from './school.entity';
+import { Curriculum } from './curriculum.entity';
 
 @Entity({
   name: 'programs',
@@ -26,4 +28,7 @@ export class Program {
   @ManyToOne(() => School, (school) => school.programs, { nullable: false })
   @JoinColumn({ name: 'school_id' })
   school: School;
+
+  @OneToMany(() => Curriculum, (curriculum) => curriculum.program)
+  curricula: Curriculum[];
 }
