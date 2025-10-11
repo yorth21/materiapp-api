@@ -3,10 +3,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Curriculum } from './curriculum.entity';
 import { Course } from './course.entity';
+import { CoursePrerequisite } from './course-prerequisite.entity';
 
 @Entity({
   name: 'courses_in_curriculum',
@@ -38,4 +40,10 @@ export class CourseInCurriculum {
   })
   @JoinColumn({ name: 'course_id' })
   course: Course;
+
+  @OneToMany(() => CoursePrerequisite, (cp) => cp.course)
+  courses: CoursePrerequisite[];
+
+  @OneToMany(() => CoursePrerequisite, (cp) => cp.prerequisite)
+  prerequisites: CoursePrerequisite[];
 }

@@ -8,6 +8,7 @@ import { Student } from './entities/student.entity';
 import { Curriculum } from './entities/curriculum.entity';
 import { Course } from './entities/course.entity';
 import { CourseInCurriculum } from './entities/course-in-curriculum.entity';
+import { CoursePrerequisite } from './entities/course-prerequisite.entity';
 
 // Controllers
 import { CampusesController } from './controllers/campuses.controller';
@@ -31,6 +32,7 @@ import { StudentsService } from './services/students.service';
       Curriculum,
       Course,
       CourseInCurriculum,
+      CoursePrerequisite,
     ]),
   ],
   controllers: [
