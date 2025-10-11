@@ -6,6 +6,7 @@ import { Program } from './entities/program.entity';
 import { School } from './entities/school.entity';
 import { Student } from './entities/student.entity';
 import { Curriculum } from './entities/curriculum.entity';
+import { Course } from './entities/course.entity';
 
 // Controllers
 import { CampusesController } from './controllers/campuses.controller';
@@ -21,7 +22,14 @@ import { StudentsService } from './services/students.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Campus, Program, School, Student, Curriculum]),
+    TypeOrmModule.forFeature([
+      Campus,
+      Program,
+      School,
+      Student,
+      Curriculum,
+      Course,
+    ]),
   ],
   controllers: [
     CampusesController,
