@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSchoolDto } from '../dtos/schools/create-school.dto';
 import { UpdateSchoolDto } from '../dtos/schools/update-school.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { School } from '../entities/school.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SchoolsService {
-  create(createSchoolDto: CreateSchoolDto) {
-    return 'This action adds a new school';
+  constructor(
+    @InjectRepository(School)
+    private schoolsRepository: Repository<School>,
+  ) {}
+
+  async create(createSchoolDto: CreateSchoolDto): Promise<School> {
+    const school = this.schoolsRepository.create(createSchoolDto);
+    return this.schoolsRepository.save({
+      ...school,
+      campus: { id: createSchoolDto.campusId },
+    });
   }
 
-  findAll() {
-    return `This action returns all schools`;
+  async findAll(): Promise<School[]> {
+    return this.schoolsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} school`;
+  async findOne(id: number): Promise<School | null> {
+    return this.schoolsRepository.findOneBy({ id });
+  }
+  async update(id: number, updateSchoolDto: UpdateSchoolDto): Promise<void> {
+    await this.schoolsRepository.update(id, updateSchoolDto);
   }
 
-  update(id: number, updateSchoolDto: UpdateSchoolDto) {
-    return `This action updates a #${id} school`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} school`;
+  async remove(id: number): Promise<void> {
+    await this.schoolsRepository.delete(id);
   }
 }
