@@ -25,7 +25,10 @@ export class SchoolsService {
   }
 
   async findOne(id: number): Promise<School | null> {
-    return this.schoolsRepository.findOneBy({ id });
+    return this.schoolsRepository.findOne({
+      where: { id },
+      relations: ['campus'],
+    });
   }
   async update(id: number, updateSchoolDto: UpdateSchoolDto): Promise<void> {
     await this.schoolsRepository.update(id, updateSchoolDto);
