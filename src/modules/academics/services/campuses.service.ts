@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCampusDto } from '../dtos/campuses/create-campus.dto';
 import { UpdateCampusDto } from '../dtos/campuses/update-campus.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Campus } from '../entities/campus.entity';
 
 @Injectable()
 export class CampusesService {
-  create(createCampusDto: CreateCampusDto) {
-    return 'This action adds a new campus';
+  constructor(
+    @InjectRepository(Campus)
+    private readonly campusRepository: Repository<Campus>,
+  ) {}
+
+  async create(createCampusDto: CreateCampusDto): Promise<Campus> {
+    const campus = this.campusRepository.create(createCampusDto);
+    return this.campusRepository.save(campus);
   }
 
-  findAll() {
-    return `This action returns all campuses`;
+  async findAll(): Promise<Campus[]> {
+    return this.campusRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} campus`;
+  async findOne(id: number): Promise<Campus | null> {
+    return this.campusRepository.findOneBy({ id });
   }
 
-  update(id: number, updateCampusDto: UpdateCampusDto) {
-    return `This action updates a #${id} campus`;
+  async update(id: number, updateCampusDto: UpdateCampusDto): Promise<void> {
+    await this.campusRepository.update(id, updateCampusDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} campus`;
+  async remove(id: number): Promise<void> {
+    await this.campusRepository.delete(id);
   }
 }
