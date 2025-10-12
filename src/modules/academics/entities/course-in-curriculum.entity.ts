@@ -9,6 +9,7 @@ import {
 import { Curriculum } from './curriculum.entity';
 import { Course } from './course.entity';
 import { CoursePrerequisite } from './course-prerequisite.entity';
+import { StudentCourse } from './student-course.entity';
 
 @Entity({
   name: 'courses_in_curriculum',
@@ -46,4 +47,7 @@ export class CourseInCurriculum {
 
   @OneToMany(() => CoursePrerequisite, (cp) => cp.prerequisiteCic)
   prerequisites: CoursePrerequisite[];
+
+  @OneToMany(() => StudentCourse, (sc) => sc.courseInCurriculum)
+  studentCourses: StudentCourse[];
 }

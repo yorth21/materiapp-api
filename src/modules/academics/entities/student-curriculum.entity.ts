@@ -3,10 +3,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Student } from './student.entity';
 import { Curriculum } from './curriculum.entity';
+import { StudentCourse } from './student-course.entity';
 
 @Entity({
   name: 'student_curricula',
@@ -29,4 +31,7 @@ export class StudentCurriculum {
   })
   @JoinColumn({ name: 'curriculum_id' })
   curriculum: Curriculum;
+
+  @OneToMany(() => StudentCourse, (sc) => sc.studentCurriculum)
+  studentCourses: StudentCourse[];
 }
