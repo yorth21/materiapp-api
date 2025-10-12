@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Program } from './program.entity';
 import { CourseInCurriculum } from './course-in-curriculum.entity';
+import { StudentCurriculum } from './student-curriculum.entity';
 
 @Entity({
   name: 'curricula',
@@ -33,4 +34,7 @@ export class Curriculum {
 
   @OneToMany(() => CourseInCurriculum, (cic) => cic.curriculum)
   coursesInCurriculum: CourseInCurriculum[];
+
+  @OneToMany(() => StudentCurriculum, (sc) => sc.curriculum)
+  studentCurricula: StudentCurriculum[];
 }

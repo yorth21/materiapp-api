@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { StudentCurriculum } from './student-curriculum.entity';
 
 @Entity({
   name: 'students',
@@ -44,4 +46,7 @@ export class Student {
     name: 'updated_at',
   })
   updatedAt: Date;
+
+  @OneToMany(() => StudentCurriculum, (sc) => sc.student)
+  studentCurricula: StudentCurriculum[];
 }
