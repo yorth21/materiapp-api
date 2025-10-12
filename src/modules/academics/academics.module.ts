@@ -17,12 +17,14 @@ import { CampusesController } from './controllers/campuses.controller';
 import { ProgramsController } from './controllers/programs.controller';
 import { SchoolsController } from './controllers/schools.controller';
 import { StudentsController } from './controllers/students.controller';
+import { CurriculaController } from './controllers/curricula.controller';
 
 // Services
 import { CampusesService } from './services/campuses.service';
 import { ProgramsService } from './services/programs.service';
 import { SchoolsService } from './services/schools.service';
 import { StudentsService } from './services/students.service';
+import { CurriculaService } from './services/curricula.service';
 
 @Module({
   imports: [
@@ -44,12 +46,14 @@ import { StudentsService } from './services/students.service';
     ProgramsController,
     SchoolsController,
     StudentsController,
+    CurriculaController,
   ],
   providers: [
     CampusesService,
     ProgramsService,
     SchoolsService,
     StudentsService,
+    CurriculaService,
   ],
 })
 export class AcademicsModule {}
