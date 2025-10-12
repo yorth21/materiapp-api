@@ -41,9 +41,9 @@ export class CourseInCurriculum {
   @JoinColumn({ name: 'course_id' })
   course: Course;
 
-  @OneToMany(() => CoursePrerequisite, (cp) => cp.course)
+  @OneToMany(() => CoursePrerequisite, (cp) => cp.courseInCurriculum)
   courses: CoursePrerequisite[];
 
-  @OneToMany(() => CoursePrerequisite, (cp) => cp.prerequisite)
+  @OneToMany(() => CoursePrerequisite, (cp) => cp.prerequisiteCic)
   prerequisites: CoursePrerequisite[];
 }
