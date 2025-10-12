@@ -18,6 +18,7 @@ import { ProgramsController } from './controllers/programs.controller';
 import { SchoolsController } from './controllers/schools.controller';
 import { StudentsController } from './controllers/students.controller';
 import { CurriculaController } from './controllers/curricula.controller';
+import { CoursesController } from './controllers/courses.controller';
 
 // Services
 import { CampusesService } from './services/campuses.service';
@@ -25,6 +26,7 @@ import { ProgramsService } from './services/programs.service';
 import { SchoolsService } from './services/schools.service';
 import { StudentsService } from './services/students.service';
 import { CurriculaService } from './services/curricula.service';
+import { CoursesService } from './services/courses.service';
 
 @Module({
   imports: [
@@ -47,6 +49,7 @@ import { CurriculaService } from './services/curricula.service';
     SchoolsController,
     StudentsController,
     CurriculaController,
+    CoursesController,
   ],
   providers: [
     CampusesService,
@@ -54,6 +57,7 @@ import { CurriculaService } from './services/curricula.service';
     SchoolsService,
     StudentsService,
     CurriculaService,
+    CoursesService,
   ],
 })
 export class AcademicsModule {}
