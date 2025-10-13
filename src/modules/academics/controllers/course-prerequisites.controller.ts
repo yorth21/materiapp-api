@@ -28,7 +28,7 @@ export class CoursePrerequisitesController {
     return this.coursePrerequisitesService.findAll();
   }
 
-  @Get(':courseInCurriculumId/course-in-curriculum')
+  @Get('course-in-curriculum/:courseInCurriculumId')
   findInCurriculum(
     @Param('courseInCurriculumId', ParseIntPipe) courseInCurriculumId: number,
   ) {
