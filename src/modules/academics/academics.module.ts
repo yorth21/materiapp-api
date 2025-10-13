@@ -20,6 +20,7 @@ import { StudentsController } from './controllers/students.controller';
 import { CurriculaController } from './controllers/curricula.controller';
 import { CoursesController } from './controllers/courses.controller';
 import { CoursesInCurriculumController } from './controllers/courses-in-curriculum.controller';
+import { CoursePrerequisitesController } from './controllers/course-prerequisites.controller';
 
 // Services
 import { CampusesService } from './services/campuses.service';
@@ -29,6 +30,7 @@ import { StudentsService } from './services/students.service';
 import { CurriculaService } from './services/curricula.service';
 import { CoursesService } from './services/courses.service';
 import { CoursesInCurriculumService } from './services/courses-in-curriculum.service';
+import { CoursePrerequisitesService } from './services/course-prerequisites.service';
 
 @Module({
   imports: [
@@ -53,6 +55,7 @@ import { CoursesInCurriculumService } from './services/courses-in-curriculum.ser
     CurriculaController,
     CoursesController,
     CoursesInCurriculumController,
+    CoursePrerequisitesController,
   ],
   providers: [
     CampusesService,
@@ -62,6 +65,7 @@ import { CoursesInCurriculumService } from './services/courses-in-curriculum.ser
     CurriculaService,
     CoursesService,
     CoursesInCurriculumService,
+    CoursePrerequisitesService,
   ],
 })
 export class AcademicsModule {}
