@@ -5,6 +5,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  RelationId,
 } from 'typeorm';
 import { Curriculum } from './curriculum.entity';
 import { Course } from './course.entity';
@@ -29,17 +30,26 @@ export class CourseInCurriculum {
   @Column({ type: 'boolean', default: true, name: 'is_active' })
   isActive: boolean;
 
+  @RelationId((cic: CourseInCurriculum) => cic.curriculum)
+  curriculumId: number;
+
   @ManyToOne(() => Curriculum, (curriculum) => curriculum.coursesInCurriculum, {
     nullable: false,
   })
   @JoinColumn({ name: 'curriculum_id' })
   curriculum: Curriculum;
 
+  @RelationId((cic: CourseInCurriculum) => cic.course)
+  courseId: number;
+
   @ManyToOne(() => Course, (course) => course.coursesInCurriculum, {
     nullable: false,
   })
   @JoinColumn({ name: 'course_id' })
   course: Course;
+
+  @RelationId((cic: CourseInCurriculum) => cic.prerequisite)
+  prerequisiteId: number | null;
 
   @ManyToOne(() => Course, (course) => course.prerequisiteFor, {
     nullable: true,

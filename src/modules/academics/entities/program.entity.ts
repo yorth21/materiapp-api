@@ -5,6 +5,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  RelationId,
 } from 'typeorm';
 import { School } from './school.entity';
 import { Curriculum } from './curriculum.entity';
@@ -24,6 +25,9 @@ export class Program {
 
   @Column({ type: 'boolean', default: true, name: 'is_active' })
   isActive: boolean;
+
+  @RelationId((program: Program) => program.school)
+  schoolId: number;
 
   @ManyToOne(() => School, (school) => school.programs, { nullable: false })
   @JoinColumn({ name: 'school_id' })

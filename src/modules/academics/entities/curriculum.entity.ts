@@ -5,6 +5,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  RelationId,
 } from 'typeorm';
 import { Program } from './program.entity';
 import { CourseInCurriculum } from './course-in-curriculum.entity';
@@ -25,6 +26,9 @@ export class Curriculum {
 
   @Column({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
+
+  @RelationId((curriculum: Curriculum) => curriculum.program)
+  programId: number;
 
   @ManyToOne(() => Program, (program) => program.curricula, {
     nullable: false,
