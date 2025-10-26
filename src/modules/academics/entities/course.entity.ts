@@ -19,4 +19,7 @@ export class Course {
 
   @OneToMany(() => CourseInCurriculum, (cic) => cic.course)
   coursesInCurriculum: CourseInCurriculum[];
+
+  @OneToMany(() => CourseInCurriculum, (cic) => cic.course)
+  prerequisiteFor: CourseInCurriculum[];
 }
