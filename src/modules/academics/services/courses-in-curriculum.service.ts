@@ -32,7 +32,7 @@ export class CoursesInCurriculumService {
   async findOne(id: number): Promise<CourseInCurriculum | null> {
     return this.coursesInCurriculumRepository.findOne({
       where: { id },
-      relations: ['curriculum', 'course'],
+      relations: ['curriculum', 'course', 'prerequisite'],
     });
   }
 
