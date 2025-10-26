@@ -8,7 +8,6 @@ import { Student } from './entities/student.entity';
 import { Curriculum } from './entities/curriculum.entity';
 import { Course } from './entities/course.entity';
 import { CourseInCurriculum } from './entities/course-in-curriculum.entity';
-import { CoursePrerequisite } from './entities/course-prerequisite.entity';
 import { StudentCurriculum } from './entities/student-curriculum.entity';
 import { StudentCourse } from './entities/student-course.entity';
 
@@ -20,7 +19,6 @@ import { StudentsController } from './controllers/students.controller';
 import { CurriculaController } from './controllers/curricula.controller';
 import { CoursesController } from './controllers/courses.controller';
 import { CoursesInCurriculumController } from './controllers/courses-in-curriculum.controller';
-import { CoursePrerequisitesController } from './controllers/course-prerequisites.controller';
 import { StudentCoursesController } from './controllers/student-courses.controller';
 
 // Services
@@ -31,7 +29,6 @@ import { StudentsService } from './services/students.service';
 import { CurriculaService } from './services/curricula.service';
 import { CoursesService } from './services/courses.service';
 import { CoursesInCurriculumService } from './services/courses-in-curriculum.service';
-import { CoursePrerequisitesService } from './services/course-prerequisites.service';
 import { StudentCoursesService } from './services/student-courses.service';
 
 @Module({
@@ -44,7 +41,6 @@ import { StudentCoursesService } from './services/student-courses.service';
       Curriculum,
       Course,
       CourseInCurriculum,
-      CoursePrerequisite,
       StudentCurriculum,
       StudentCourse,
     ]),
@@ -57,7 +53,6 @@ import { StudentCoursesService } from './services/student-courses.service';
     CurriculaController,
     CoursesController,
     CoursesInCurriculumController,
-    CoursePrerequisitesController,
     StudentCoursesController,
   ],
   providers: [
@@ -68,7 +63,6 @@ import { StudentCoursesService } from './services/student-courses.service';
     CurriculaService,
     CoursesService,
     CoursesInCurriculumService,
-    CoursePrerequisitesService,
     StudentCoursesService,
   ],
 })

@@ -8,7 +8,6 @@ import {
 } from 'typeorm';
 import { Curriculum } from './curriculum.entity';
 import { Course } from './course.entity';
-import { CoursePrerequisite } from './course-prerequisite.entity';
 import { StudentCourse } from './student-course.entity';
 
 @Entity({
@@ -42,11 +41,11 @@ export class CourseInCurriculum {
   @JoinColumn({ name: 'course_id' })
   course: Course;
 
-  @OneToMany(() => CoursePrerequisite, (cp) => cp.courseInCurriculum)
-  courses: CoursePrerequisite[];
-
-  @OneToMany(() => CoursePrerequisite, (cp) => cp.prerequisiteCic)
-  prerequisites: CoursePrerequisite[];
+  @ManyToOne(() => Course, (course) => course.prerequisiteFor, {
+    nullable: true,
+  })
+  @JoinColumn({ name: 'prerequisite_id' })
+  prerequisite: Course | null;
 
   @OneToMany(() => StudentCourse, (sc) => sc.courseInCurriculum)
   studentCourses: StudentCourse[];
