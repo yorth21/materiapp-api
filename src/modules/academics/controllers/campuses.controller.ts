@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  HttpCode,
 } from '@nestjs/common';
 import { CampusesService } from '../services/campuses.service';
 import { CreateCampusDto } from '../dtos/campuses//create-campus.dto';
@@ -40,7 +41,8 @@ export class CampusesController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.campusesService.remove(id);
+    return this.campusesService.softDelete(id);
   }
 }
