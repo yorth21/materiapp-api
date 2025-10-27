@@ -23,23 +23,26 @@ export class CampusesService {
     });
   }
 
-  async findOne(id: number): Promise<Campus | null> {
-    return this.campusRepository.findOne({
-      where: { id, isActive: true },
-    });
+  async findOne(id: number): Promise<Campus> {
+    return this.findById(id);
   }
 
   async update(id: number, updateCampusDto: UpdateCampusDto): Promise<Campus> {
     await this.campusRepository.update(id, updateCampusDto);
-    const updated = await this.campusRepository.findOneBy({ id });
-    if (!updated) {
-      throw new NotFoundException('Campus not found');
-    }
-
-    return updated;
+    return this.findById(id);
   }
 
   async softDelete(id: number): Promise<void> {
     await this.campusRepository.update(id, { isActive: false });
+  }
+
+  private async findById(id: number): Promise<Campus> {
+    const campus = await this.campusRepository.findOne({
+      where: { id, isActive: true },
+    });
+    if (!campus) {
+      throw new NotFoundException('Campus not found');
+    }
+    return campus;
   }
 }
