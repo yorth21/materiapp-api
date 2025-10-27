@@ -9,7 +9,7 @@ export class CurriculumProgressView {
   version: string;
 
   @ViewColumn({ name: 'student_id' })
-  studentId: number;
+  studentId: string;
 
   @ViewColumn({ name: 'student_curriculum_id' })
   studentCurriculumId: number;
