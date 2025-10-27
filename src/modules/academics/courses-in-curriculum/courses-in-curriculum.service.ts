@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CourseInCurriculum } from '../entities/course-in-curriculum.entity';
-import { CreateCourseInCurriculumDto } from '../dtos/courses-in-curriculum/create-course-in-curriculum.dto';
-import { UpdateCourseInCurriculumDto } from '../dtos/courses-in-curriculum/update-course-in-curriculum.dto';
-import { Curriculum } from '../entities/curriculum.entity';
-import { Course } from '../entities/course.entity';
+import { CourseInCurriculum } from '../../../entities/course-in-curriculum.entity';
+import { CreateCourseInCurriculumDto } from './dto/create-course-in-curriculum.dto';
+import { UpdateCourseInCurriculumDto } from './dto/update-course-in-curriculum.dto';
+import { Curriculum } from '../../../entities/curriculum.entity';
+import { Course } from '../../../entities/course.entity';
 
 @Injectable()
 export class CoursesInCurriculumService {

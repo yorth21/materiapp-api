@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateSchoolDto } from '../dtos/schools/create-school.dto';
-import { UpdateSchoolDto } from '../dtos/schools/update-school.dto';
+import { CreateSchoolDto } from './dto/create-school.dto';
+import { UpdateSchoolDto } from './dto/update-school.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { School } from '../entities/school.entity';
+import { School } from '../../../entities/school.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

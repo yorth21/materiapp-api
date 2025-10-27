@@ -7,17 +7,13 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { StudentsService } from '../services/students.service';
-import { CreateStudentDto } from '../dtos/students/create-student.dto';
-import { UpdateStudentDto } from '../dtos/students/update-student.dto';
-import { CurriculumProgressService } from '../services/curriculum-progress.service';
+import { StudentsService } from '../students/students.service';
+import { CreateStudentDto } from './dto/create-student.dto';
+import { UpdateStudentDto } from './dto/update-student.dto';
 
 @Controller('students')
 export class StudentsController {
-  constructor(
-    private readonly studentsService: StudentsService,
-    private readonly curriculumProgressService: CurriculumProgressService,
-  ) {}
+  constructor(private readonly studentsService: StudentsService) {}
 
   @Post()
   create(@Body() createStudentDto: CreateStudentDto) {
@@ -32,11 +28,6 @@ export class StudentsController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.studentsService.findOne(id);
-  }
-
-  @Get(':id/progress')
-  getProgress(@Param('id') id: string) {
-    return this.curriculumProgressService.getProgressByStudentId(id);
   }
 
   @Patch(':id')

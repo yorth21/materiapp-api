@@ -8,9 +8,9 @@ import {
   Delete,
   ParseIntPipe,
 } from '@nestjs/common';
-import { CoursesService } from '../services/courses.service';
-import { CreateCourseDto } from '../dtos/courses/create-course.dto';
-import { UpdateCourseDto } from '../dtos/courses/update-course.dto';
+import { CoursesService } from '../courses/courses.service';
+import { CreateCourseDto } from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Controller('courses')
 export class CoursesController {

@@ -7,9 +7,9 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-import { StudentCurriculaService } from '../services/student-curricula.service';
-import { CreateStudentCurriculumDto } from '../dtos/student-curricula/create-student-curriculum.dto';
-import { UpdateStudentCurriculumDto } from '../dtos/student-curricula/update-student-curriculum.dto';
+import { StudentCurriculaService } from '../student-curricula/student-curricula.service';
+import { CreateStudentCurriculumDto } from './dto/create-student-curriculum.dto';
+import { UpdateStudentCurriculumDto } from './dto/update-student-curriculum.dto';
 
 @Controller('student-curricula')
 export class StudentCurriculaController {

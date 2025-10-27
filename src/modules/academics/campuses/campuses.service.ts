@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateCampusDto } from '../dtos/campuses/create-campus.dto';
-import { UpdateCampusDto } from '../dtos/campuses/update-campus.dto';
+import { CreateCampusDto } from './dto/create-campus.dto';
+import { UpdateCampusDto } from './dto/update-campus.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Campus } from '../entities/campus.entity';
+import { Campus } from '../../../entities/campus.entity';
 
 @Injectable()
 export class CampusesService {

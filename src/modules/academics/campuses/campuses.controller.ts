@@ -9,9 +9,9 @@ import {
   ParseIntPipe,
   HttpCode,
 } from '@nestjs/common';
-import { CampusesService } from '../services/campuses.service';
-import { CreateCampusDto } from '../dtos/campuses//create-campus.dto';
-import { UpdateCampusDto } from '../dtos/campuses/update-campus.dto';
+import { CampusesService } from './campuses.service';
+import { CreateCampusDto } from './dto/create-campus.dto';
+import { UpdateCampusDto } from './dto/update-campus.dto';
 
 @Controller('campuses')
 export class CampusesController {

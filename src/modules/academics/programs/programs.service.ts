@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProgramDto } from '../dtos/programs/create-program.dto';
-import { UpdateProgramDto } from '../dtos/programs/update-program.dto';
+import { CreateProgramDto } from './dto/create-program.dto';
+import { UpdateProgramDto } from './dto/update-program.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Program } from '../entities/program.entity';
+import { Program } from '../../../entities/program.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
