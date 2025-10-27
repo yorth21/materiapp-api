@@ -10,10 +10,14 @@ import {
 import { StudentsService } from '../services/students.service';
 import { CreateStudentDto } from '../dtos/students/create-student.dto';
 import { UpdateStudentDto } from '../dtos/students/update-student.dto';
+import { CurriculumProgressService } from '../services/curriculum-progress.service';
 
 @Controller('students')
 export class StudentsController {
-  constructor(private readonly studentsService: StudentsService) {}
+  constructor(
+    private readonly studentsService: StudentsService,
+    private readonly curriculumProgressService: CurriculumProgressService,
+  ) {}
 
   @Post()
   create(@Body() createStudentDto: CreateStudentDto) {
@@ -28,6 +32,11 @@ export class StudentsController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.studentsService.findOne(id);
+  }
+
+  @Get(':id/progress')
+  getProgress(@Param('id') id: string) {
+    return this.curriculumProgressService.getProgressByStudentId(id);
   }
 
   @Patch(':id')

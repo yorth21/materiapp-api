@@ -10,6 +10,7 @@ import { Course } from './entities/course.entity';
 import { CourseInCurriculum } from './entities/course-in-curriculum.entity';
 import { StudentCurriculum } from './entities/student-curriculum.entity';
 import { StudentCourse } from './entities/student-course.entity';
+import { CurriculumProgressView } from './entities/curriculum-progress.view';
 
 // Controllers
 import { CampusesController } from './controllers/campuses.controller';
@@ -32,6 +33,7 @@ import { CoursesService } from './services/courses.service';
 import { CoursesInCurriculumService } from './services/courses-in-curriculum.service';
 import { StudentCoursesService } from './services/student-courses.service';
 import { StudentCurriculaService } from './services/student-curricula.service';
+import { CurriculumProgressService } from './services/curriculum-progress.service';
 
 @Module({
   imports: [
@@ -45,6 +47,7 @@ import { StudentCurriculaService } from './services/student-curricula.service';
       CourseInCurriculum,
       StudentCurriculum,
       StudentCourse,
+      CurriculumProgressView,
     ]),
   ],
   controllers: [
@@ -68,6 +71,7 @@ import { StudentCurriculaService } from './services/student-curricula.service';
     CoursesInCurriculumService,
     StudentCoursesService,
     StudentCurriculaService,
+    CurriculumProgressService,
   ],
 })
 export class AcademicsModule {}
