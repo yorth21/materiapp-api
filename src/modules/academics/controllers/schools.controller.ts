@@ -41,6 +41,6 @@ export class SchoolsController {
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.schoolsService.remove(id);
+    return this.schoolsService.softDelete(id);
   }
 }

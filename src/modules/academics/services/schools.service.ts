@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSchoolDto } from '../dtos/schools/create-school.dto';
 import { UpdateSchoolDto } from '../dtos/schools/update-school.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,20 +21,30 @@ export class SchoolsService {
   }
 
   async findAll(): Promise<School[]> {
-    return this.schoolsRepository.find();
-  }
-
-  async findOne(id: number): Promise<School | null> {
-    return this.schoolsRepository.findOne({
-      where: { id },
-      relations: ['campus'],
+    return this.schoolsRepository.find({
+      where: { isActive: true },
     });
   }
-  async update(id: number, updateSchoolDto: UpdateSchoolDto): Promise<void> {
+
+  async findOne(id: number): Promise<School> {
+    return this.findById(id);
+  }
+  async update(id: number, updateSchoolDto: UpdateSchoolDto): Promise<School> {
     await this.schoolsRepository.update(id, updateSchoolDto);
+    return this.findById(id);
   }
 
-  async remove(id: number): Promise<void> {
-    await this.schoolsRepository.delete(id);
+  async softDelete(id: number): Promise<void> {
+    await this.schoolsRepository.update(id, { isActive: false });
+  }
+
+  private async findById(id: number): Promise<School> {
+    const school = await this.schoolsRepository.findOne({
+      where: { id, isActive: true },
+    });
+    if (!school) {
+      throw new NotFoundException('School not found');
+    }
+    return school;
   }
 }
