@@ -1,7 +1,7 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
 @ViewEntity({ name: 'vw_curriculum_progress' })
-export class CurriculumProgressView {
+export class VwCurriculumProgress {
   @ViewColumn({ name: 'curriculum_id' })
   curriculumId: number;
 
