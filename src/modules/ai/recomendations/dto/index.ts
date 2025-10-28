@@ -1,5 +1,3 @@
-import { Course } from '../../../../entities/course.entity';
-
 export interface CurriculumCourseInfo {
   id: string; // course code
   cr: number; // credits
@@ -31,6 +29,15 @@ export interface CourseRecommendationResponse {
 }
 
 export interface GeneratedRecommendation {
-  courses: Course[];
+  courses: CoursesByCode[];
   rationale: string;
+}
+
+export interface CoursesByCode {
+  id: number;
+  code: string;
+  name: string;
+  credits: number;
+  semester: number;
+  calendar: string;
 }

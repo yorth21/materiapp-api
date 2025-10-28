@@ -8,6 +8,7 @@ import {
   CompletedCourseInfo,
   CourseRecommendationRequest,
   CourseRecommendationResponse,
+  CoursesByCode,
   CurriculumCourseInfo,
   GeneratedRecommendation,
 } from './dto';
@@ -143,10 +144,19 @@ export class RecomendationsService {
     }
   }
 
-  private getCoursesByCodes(courseCodes: string[]): Promise<Course[]> {
-    return this.courseRepository
-      .createQueryBuilder('course')
-      .where('course.code IN (:...courseCodes)', { courseCodes })
-      .getMany();
+  private getCoursesByCodes(courseCodes: string[]): Promise<CoursesByCode[]> {
+    return this.courseInCurriculumRepository
+      .createQueryBuilder('cic')
+      .select([
+        'cic.id as id',
+        'c.code as code',
+        'c.name as name',
+        'cic.credits as credits',
+        'cic.semester as semester',
+        'TRIM(cic.calendar) as calendar',
+      ])
+      .innerJoin('cic.course', 'c')
+      .where('c.code IN (:...courseCodes)', { courseCodes })
+      .getRawMany();
   }
 }

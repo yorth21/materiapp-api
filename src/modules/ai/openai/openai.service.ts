@@ -16,7 +16,7 @@ export class OpenaiService {
       const response = await this.openai.chat.completions.create({
         model: 'gpt-4o-mini', // Más barato para empezar
         response_format: { type: 'json_object' },
-        seed: 42, // opcional: hace las respuestas más estables
+        seed: 42, // Para reproducibilidad
         messages: [
           {
             role: 'system',
