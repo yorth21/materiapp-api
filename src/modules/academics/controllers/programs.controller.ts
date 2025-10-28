@@ -11,6 +11,7 @@ import {
 import { ProgramsService } from '../services/programs.service';
 import { CreateProgramDto } from '../dtos/programs/create-program.dto';
 import { UpdateProgramDto } from '../dtos/programs/update-program.dto';
+import { Public, Roles } from 'nest-keycloak-connect';
 
 @Controller('programs')
 export class ProgramsController {
@@ -22,11 +23,13 @@ export class ProgramsController {
   }
 
   @Get()
+  @Public()
   findAll() {
     return this.programsService.findAll();
   }
 
   @Get(':id')
+  @Roles({ roles: ['realm:admin'] })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.programsService.findOne(id);
   }

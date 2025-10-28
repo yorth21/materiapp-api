@@ -5,4 +5,8 @@ export class Env {
   POSTGRES_DB: string;
   POSTGRES_USER: string;
   POSTGRES_PASSWORD: string;
+  KEYCLOAK_URL: string;
+  KEYCLOAK_REALM: string;
+  KEYCLOAK_CLIENT_ID: string;
+  KEYCLOAK_CLIENT_SECRET: string;
 }
