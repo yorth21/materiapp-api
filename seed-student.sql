@@ -1,5 +1,5 @@
 insert into students (code, names, email, password, semester) values
-('220034001', 'Yorth H. Ortegon', 'yorth21@gmail.com', 12);
+('220034001', 'Yorth H. Ortegon', 'yorth21@gmail.com', 'password123', 12);
 
 insert into student_curricula (student_id, curriculum_id) values
 ((select id from students where code = '220034001'), (select id from curricula where version = '2018'));
