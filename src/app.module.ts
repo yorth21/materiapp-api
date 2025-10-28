@@ -7,6 +7,7 @@ import { AcademicsModule } from './modules/academics/academics.module';
 import { AuthGuard, ResourceGuard, RoleGuard } from 'nest-keycloak-connect';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './modules/auth/auth.module';
+import { AiModule } from './modules/ai/ai.module';
 
 @Module({
   imports: [
@@ -41,14 +42,12 @@ import { AuthModule } from './modules/auth/auth.module';
     UsersModule,
     AcademicsModule,
     AuthModule,
- 
+    AiModule,
   ],
   providers: [
-  
     { provide: APP_GUARD, useClass: AuthGuard },
     { provide: APP_GUARD, useClass: ResourceGuard },
     { provide: APP_GUARD, useClass: RoleGuard },
   ],
-
 })
 export class AppModule {}
