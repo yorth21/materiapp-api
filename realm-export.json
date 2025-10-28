@@ -77,6 +77,24 @@
         "attributes": {}
       },
       {
+        "id": "f8dda1c5-fe2f-4f18-9b4b-062dde3bf740",
+        "name": "admin",
+        "description": "This role for admins",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "b3c2713f-a794-411e-92e4-a94e14a3d98f",
+        "attributes": {}
+      },
+      {
+        "id": "30cf2828-b40f-41e1-afa5-d9ae946fe983",
+        "name": "user",
+        "description": "This role for users",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "b3c2713f-a794-411e-92e4-a94e14a3d98f",
+        "attributes": {}
+      },
+      {
         "id": "56c722da-0776-434b-9841-cd5ae2289baa",
         "name": "offline_access",
         "description": "${role_offline-access}",
@@ -474,24 +492,6 @@
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister": false,
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
   "webAuthnPolicyPasswordlessExtraOrigins": [],
-  "users": [
-    {
-      "id": "55299598-0012-4020-8bd4-98888546420b",
-      "username": "service-account-materiap-backend",
-      "emailVerified": false,
-      "createdTimestamp": 1761601909044,
-      "enabled": true,
-      "totp": false,
-      "serviceAccountClientId": "materiap-backend",
-      "disableableCredentialTypes": [],
-      "requiredActions": [],
-      "realmRoles": [
-        "default-roles-materiapp-realm"
-      ],
-      "notBefore": 0,
-      "groups": []
-    }
-  ],
   "scopeMappings": [
     {
       "clientScope": "offline_access",
@@ -712,15 +712,16 @@
       "standardFlowEnabled": true,
       "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": true,
-      "serviceAccountsEnabled": true,
+      "serviceAccountsEnabled": false,
       "publicClient": false,
       "frontchannelLogout": true,
       "protocol": "openid-connect",
       "attributes": {
         "oidc.ciba.grant.enabled": "false",
-        "client.secret.creation.time": "1761601909",
+        "client.secret.creation.time": "1761613212",
         "backchannel.logout.session.required": "true",
         "post.logout.redirect.uris": "http://localhost:3000/*",
+        "display.on.consent.screen": "false",
         "oauth2.device.authorization.grant.enabled": "false",
         "backchannel.logout.revoke.offline.tokens": "false"
       },
@@ -1182,8 +1183,8 @@
           "consentRequired": false,
           "config": {
             "id.token.claim": "true",
-            "access.token.claim": "true",
             "introspection.token.claim": "true",
+            "access.token.claim": "true",
             "userinfo.token.claim": "true"
           }
         },
