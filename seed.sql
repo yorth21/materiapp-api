@@ -1,6 +1,6 @@
 -- Initial SQL seed file
 insert into campuses (name, city, address) values
-('Udenar Sede Principal', 'Pasto', 'Cra 21 # 26-85'),
+('Udenar Sede Principal', 'Pasto', 'Cra 21 # 26-85');
 
 insert into schools (name, code, campus_id) values
 ('Facultad de Ingeniería', 'FACING', 1);
