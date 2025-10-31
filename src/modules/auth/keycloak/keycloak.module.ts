@@ -1,9 +1,10 @@
 // keycloak.module.ts
 import { Module } from '@nestjs/common';
-import { KeycloakConnectModule, ResourceGuard, RoleGuard, AuthGuard } from 'nest-keycloak-connect';
+import { KeycloakConnectModule, ResourceGuard, AuthGuard } from 'nest-keycloak-connect';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Env } from '../../../env.model';
+import { CustomRoleGuard } from './guard/auth.guard';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { Env } from '../../../env.model';
   providers: [
     { provide: APP_GUARD, useClass: AuthGuard },
     { provide: APP_GUARD, useClass: ResourceGuard },
-    { provide: APP_GUARD, useClass: RoleGuard },
+    { provide: APP_GUARD, useClass: CustomRoleGuard},
   ],
   exports: [KeycloakConnectModule],
 })
