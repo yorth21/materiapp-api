@@ -23,7 +23,7 @@ export class ProgramsController {
   }
 
   @Get()
-  @Public()
+  
   findAll() {
     return this.programsService.findAll();
   }

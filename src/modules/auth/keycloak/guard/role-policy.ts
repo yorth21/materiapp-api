@@ -4,4 +4,5 @@ export const RolePolicies = {
   users: ['realm:admin', 'realm:manager'],
   courses: ['realm:teacher', 'realm:admin'],
   'student-courses': ['realm:student', 'realm:admin'],
+  programs: ['realm:admin'],
 };
