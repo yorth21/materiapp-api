@@ -23,13 +23,12 @@ export class ProgramsController {
   }
 
   @Get()
-  
   findAll() {
     return this.programsService.findAll();
   }
 
   @Get(':id')
-  @Roles({ roles: ['realm:admin'] })
+  // @Roles({ roles: ['realm:admin'] })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.programsService.findOne(id);
   }
