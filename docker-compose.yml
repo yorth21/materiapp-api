@@ -27,7 +27,7 @@ services:
       - "8080:8080"
     volumes:
       #- /home/christian/Documentos/udenar/desarrolloWeb/project_end/api-materiapp/realm-export.json:/opt/keycloak/data/import/realm-export.json
-      - ./src/modules/auth/keycloak/themes/materiapp:/opt/keycloak/themes/materiapp
+     
     depends_on:
       - postgres
  
