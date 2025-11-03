@@ -1,6 +1,6 @@
 // keycloak.module.ts
 import { Module } from '@nestjs/common';
-import { KeycloakConnectModule, ResourceGuard, AuthGuard } from 'nest-keycloak-connect';
+import { KeycloakConnectModule, ResourceGuard, AuthGuard, TokenValidation, PolicyEnforcementMode } from 'nest-keycloak-connect';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Env } from '../../../env.model';
@@ -18,7 +18,9 @@ import { CustomRoleGuard } from './guard/auth.guard';
         clientId: configService.get('KEYCLOAK_CLIENT_ID', { infer: true }) || 'materiap-backend',
         secret: configService.get('KEYCLOAK_CLIENT_SECRET', { infer: true }) || '3EbgIyh8riFnyhgTkcqnU3h8bWmMbbva',
         //public: false, // ajusta según Client Authentication
-        bearerOnly: true,
+        bearerOnly: false,
+        policyEnforcement: PolicyEnforcementMode.ENFORCING,
+        TokenValidation:TokenValidation.ONLINE,
       }),
     }),
   ],

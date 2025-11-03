@@ -4,16 +4,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Env } from './env.model';
 import { UsersModule } from './modules/users/users.module';
 import { AcademicsModule } from './modules/academics/academics.module';
-import { AuthGuard, ResourceGuard, RoleGuard } from 'nest-keycloak-connect';
-import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './modules/auth/auth.module';
 import { AiModule } from './modules/ai/ai.module';
+import { KeycloakModule } from './modules/auth/keycloak/keycloak.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    KeycloakModule,
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService<Env>) => ({
         type: 'postgres',
@@ -28,26 +28,11 @@ import { AiModule } from './modules/ai/ai.module';
       inject: [ConfigService],
     }),
 
-    // KeycloakConnectModule.registerAsync({
-    //   useFactory: (configService: ConfigService<Env>) => ({
-    //     authServerUrl: configService.get('KEYCLOAK_URL', { infer: true })! ,
-    //     realm: configService.get('KEYCLOAK_REALM', { infer: true })!,
-    //     clientId: configService.get('KEYCLOAK_CLIENT_ID', { infer: true })! ,
-    //     secret: configService.get('KEYCLOAK_CLIENT_SECRET', { infer: true })!,
-    //     public: false,
-    //   }),
-    //   inject: [ConfigService],
-    // }),
-
     UsersModule,
     AcademicsModule,
     AuthModule,
     AiModule,
   ],
-  providers: [
-    { provide: APP_GUARD, useClass: AuthGuard },
-    { provide: APP_GUARD, useClass: ResourceGuard },
-    { provide: APP_GUARD, useClass: RoleGuard },
-  ],
+
 })
 export class AppModule {}
