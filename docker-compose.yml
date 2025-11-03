@@ -13,7 +13,7 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:24.0
-    command: ["start-dev --import-realm"] #--import-realm
+    command: ["start-dev"] #--import-realm
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
@@ -26,9 +26,10 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./ambu-realm-realm.json:/opt/keycloak/data/import/realm-export.json
+      #- /home/christian/Documentos/udenar/desarrolloWeb/project_end/api-materiapp/realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ./src/modules/auth/keycloak/themes/materiapp:/opt/keycloak/themes/materiapp
     depends_on:
       - postgres
-
+ 
 volumes:
   postgres-data:
