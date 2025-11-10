@@ -11,7 +11,6 @@ import {
 import { ProgramsService } from '../programs/programs.service';
 import { CreateProgramDto } from './dto/create-program.dto';
 import { UpdateProgramDto } from './dto/update-program.dto';
-import { Public, Roles } from 'nest-keycloak-connect';
 
 @Controller('programs')
 export class ProgramsController {
@@ -28,7 +27,6 @@ export class ProgramsController {
   }
 
   @Get(':id')
-  // @Roles({ roles: ['realm:admin'] })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.programsService.findOne(id);
   }
@@ -36,7 +34,7 @@ export class ProgramsController {
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateProgramDto: UpdateProgramDto,
+    @Body() updateProgramDto: UpdateProgramDto
   ) {
     return this.programsService.update(id, updateProgramDto);
   }
