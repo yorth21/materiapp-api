@@ -11,5 +11,8 @@
   },
 
   // Opcional: si quieres que Prettier sea el formateador por defecto
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Configuración específica para TypeScript
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
