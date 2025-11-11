@@ -3,6 +3,7 @@ import { AcademicsModule } from './modules/academics/academics.module';
 import { AiModule } from './modules/ai/ai.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { dataSourceOptions } from '../database/data-source';
 
 @Module({
   imports: [
