@@ -13,6 +13,7 @@ import { dataSourceOptions } from '../database/data-source';
     TypeOrmModule.forRoot({
       ...dataSourceOptions,
       autoLoadEntities: true,
+      synchronize: false,
     }),
     AcademicsModule,
     AiModule,
