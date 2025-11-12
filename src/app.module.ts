@@ -4,6 +4,7 @@ import { AiModule } from './modules/ai/ai.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './database/data-source';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { dataSourceOptions } from './database/data-source';
     }),
     AcademicsModule,
     AiModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

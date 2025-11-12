@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { SchoolsService } from '../schools/schools.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('schools')
 export class SchoolsController {
@@ -22,6 +24,7 @@ export class SchoolsController {
   }
 
   @Get()
+  @UseGuards(AuthGuard('jwt'))
   findAll() {
     return this.schoolsService.findAll();
   }
