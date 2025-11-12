@@ -1,5 +1,5 @@
 {
-  "name": "api-materiapp",
+  "name": "materiapp-api",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -18,11 +18,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "typeorm-ts-node-commonjs -d ./src/ormconfig.ts",
-    "migrations:generate": "npm run typeorm migration:generate",
-    "migrations:create": "typeorm-ts-node-commonjs migration:create",
-    "migrations:show": "npm run typeorm migration:show",
-    "migrations:run": "npm run typeorm migration:run"
+    "typeorm": "typeorm-ts-node-commonjs -d ./src/database/data-source.ts",
+    "migration:generate": "npm run typeorm migration:generate",
+    "migration:create": "typeorm-ts-node-commonjs migration:create",
+    "migration:show": "npm run typeorm migration:show",
+    "migration:run": "npm run typeorm migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -34,8 +34,6 @@
     "axios": "^1.13.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
-    "keycloak-connect": "^26.1.1",
-    "nest-keycloak-connect": "^1.10.1",
     "openai": "^6.7.0",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
