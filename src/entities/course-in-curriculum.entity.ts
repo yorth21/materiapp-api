@@ -24,6 +24,9 @@ export class CourseInCurriculum {
   @Column({ type: 'char', length: 2 })
   calendar: string;
 
+  @Column({ type: 'char', length: 1, nullable: true })
+  type: string;
+
   @Column({ type: 'int' })
   credits: number;
 
