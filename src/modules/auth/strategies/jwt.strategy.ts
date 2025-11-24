@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
@@ -21,25 +20,18 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         jwksRequestsPerMinute: 5,
         jwksUri: `${configService.get('KEYCLOAK_ISSUER')}/protocol/openid-connect/certs`,
       }),
+      ignoreExpiration: false,
       issuer: configService.get('KEYCLOAK_ISSUER'),
-      audience: configService.get('KEYCLOAK_CLIENT_ID'),
-      algorithms: ['RS256'],
+      audience: 'account',
     });
   }
 
   async validate(payload: any) {
-    // Extraemos los roles del JWT de Keycloak
-    const realmRoles = payload.realm_access?.roles || [];
-
-    // Opcional: También puedes extraer roles específicos del cliente
-    const clientId = this.configService.get('KEYCLOAK_CLIENT_ID');
-    const clientRoles = payload.resource_access?.[clientId]?.roles || [];
-
     return {
       userId: payload.sub,
       username: payload.preferred_username,
       email: payload.email,
-      roles: realmRoles,
+      roles: payload.realm_access?.roles || [],
     };
   }
 }
