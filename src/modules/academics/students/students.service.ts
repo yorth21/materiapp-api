@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Student } from '../../../entities/student.entity';
+import { Student } from 'src/entities/student.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -16,6 +16,7 @@ export class StudentsService {
     const student = this.studentsRepository.create(createStudentDto);
     return this.studentsRepository.save(student);
   }
+
   async findAll(): Promise<Student[]> {
     return this.studentsRepository.find();
   }
