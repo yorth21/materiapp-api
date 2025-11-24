@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/require-await */
-
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
@@ -8,10 +6,15 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { passportJwtSecret } from 'jwks-rsa';
 import { ConfigService } from '@nestjs/config';
+import { UsersService } from 'src/modules/users/users.service';
+import { CreateUserDto } from 'src/modules/users/dto/create-user.dto';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private usersService: UsersService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKeyProvider: passportJwtSecret({
@@ -27,10 +30,18 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    return {
-      userId: payload.sub,
-      username: payload.preferred_username,
+    const createUserDto: CreateUserDto = {
+      keycloakId: payload.sub,
       email: payload.email,
+      username: payload.preferred_username,
+    };
+
+    const user = await this.usersService.findOrCreate(createUserDto);
+
+    return {
+      userId: user.id,
+      username: user.username,
+      email: user.email,
       roles: payload.realm_access?.roles || [],
     };
   }
