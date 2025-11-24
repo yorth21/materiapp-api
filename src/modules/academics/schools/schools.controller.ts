@@ -18,22 +18,25 @@ export class SchoolsController {
   constructor(private readonly schoolsService: SchoolsService) {}
 
   @Post()
+  @Roles('admin')
   create(@Body() createSchoolDto: CreateSchoolDto) {
     return this.schoolsService.create(createSchoolDto);
   }
 
   @Get()
-  @Roles('student')
+  @Roles('admin', 'student')
   findAll() {
     return this.schoolsService.findAll();
   }
 
   @Get(':id')
+  @Roles('admin', 'student')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.schoolsService.findOne(id);
   }
 
   @Patch(':id')
+  @Roles('admin')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateSchoolDto: UpdateSchoolDto,
@@ -42,6 +45,7 @@ export class SchoolsController {
   }
 
   @Delete(':id')
+  @Roles('admin')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.schoolsService.softDelete(id);
   }
