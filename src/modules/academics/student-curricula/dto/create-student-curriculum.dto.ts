@@ -3,7 +3,7 @@ import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
 export class CreateStudentCurriculumDto {
   @IsNotEmpty()
   @IsUUID()
-  studentId: string;
+  userId: string;
 
   @IsNotEmpty()
   @IsNumber()

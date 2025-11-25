@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { StudentCurriculum } from './student-curriculum.entity';
 
 @Entity({
   name: 'users',
@@ -13,7 +15,7 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true, name: 'keycloak_id', nullable: true })
+  @Column({ type: 'uuid', unique: true, name: 'keycloak_id' })
   keycloakId: string;
 
   @Column({ type: 'varchar', length: 255, unique: true })
@@ -41,4 +43,7 @@ export class User {
     name: 'updated_at',
   })
   updatedAt: Date;
+
+  @OneToMany(() => StudentCurriculum, (sc) => sc.user)
+  studentCurricula: StudentCurriculum[];
 }

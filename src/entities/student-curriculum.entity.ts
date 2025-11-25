@@ -7,9 +7,9 @@ import {
   PrimaryGeneratedColumn,
   RelationId,
 } from 'typeorm';
-import { Student } from './student.entity';
 import { Curriculum } from './curriculum.entity';
 import { StudentCourse } from './student-course.entity';
+import { User } from './user.entity';
 
 @Entity({
   name: 'student_curricula',
@@ -18,17 +18,20 @@ export class StudentCurriculum {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: 'integer' })
+  semester: number;
+
   @Column({ type: 'boolean', default: true, name: 'is_active' })
   isActive: boolean;
 
-  @RelationId((sc: StudentCurriculum) => sc.student)
-  studentId: string;
+  @RelationId((sc: StudentCurriculum) => sc.user)
+  userId: string;
 
-  @ManyToOne(() => Student, (student) => student.studentCurricula, {
+  @ManyToOne(() => User, (user) => user.studentCurricula, {
     nullable: false,
   })
-  @JoinColumn({ name: 'student_id' })
-  student: Student;
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @RelationId((sc: StudentCurriculum) => sc.curriculum)
   curriculumId: number;

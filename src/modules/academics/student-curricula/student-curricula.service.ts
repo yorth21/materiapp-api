@@ -17,7 +17,7 @@ export class StudentCurriculaService {
   ): Promise<StudentCurriculum> {
     const studentCurriculum = this.studentCurriculumRepository.create({
       ...createStudentCurriculumDto,
-      student: { id: createStudentCurriculumDto.studentId },
+      user: { id: createStudentCurriculumDto.userId },
       curriculum: { id: createStudentCurriculumDto.curriculumId },
     });
     return this.studentCurriculumRepository.save(studentCurriculum);
@@ -25,14 +25,14 @@ export class StudentCurriculaService {
 
   async findAll(): Promise<StudentCurriculum[]> {
     return this.studentCurriculumRepository.find({
-      relations: ['student', 'curriculum', 'studentCourses'],
+      relations: ['user', 'curriculum', 'studentCourses'],
     });
   }
 
   async findOne(id: number): Promise<StudentCurriculum> {
     const studentCurriculum = await this.studentCurriculumRepository.findOne({
       where: { id },
-      relations: ['student', 'curriculum', 'studentCourses'],
+      relations: ['user', 'curriculum', 'studentCourses'],
     });
     if (!studentCurriculum) {
       throw new NotFoundException(`StudentCurriculum with ID ${id} not found`);
