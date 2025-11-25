@@ -45,7 +45,7 @@ export class StudentCoursesController {
   }
 
   @Get('me/student-curricula/:studentCurriculumId')
-  @Roles('student')
+  @Roles('admin', 'student')
   findMyByStudentCurriculumId(
     @CurrentUser() currentUser: ICurrentUser,
     @Param('studentCurriculumId', ParseIntPipe) studentCurriculumId: number,
