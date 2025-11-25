@@ -10,6 +10,7 @@ import {
 import { Curriculum } from './curriculum.entity';
 import { StudentCourse } from './student-course.entity';
 import { User } from './user.entity';
+import { StudentCurriculumRecommendation } from './student-curriculum-recommendation.entity';
 
 @Entity({
   name: 'student_curricula',
@@ -44,4 +45,10 @@ export class StudentCurriculum {
 
   @OneToMany(() => StudentCourse, (sc) => sc.studentCurriculum)
   studentCourses: StudentCourse[];
+
+  @OneToMany(
+    () => StudentCurriculumRecommendation,
+    (scr) => scr.studentCurriculum,
+  )
+  studentCurriculumRecommendations: StudentCurriculumRecommendation[];
 }
