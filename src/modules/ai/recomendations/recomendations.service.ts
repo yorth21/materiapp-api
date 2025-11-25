@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OpenaiService } from '../openai/openai.service';
@@ -14,7 +18,7 @@ import {
 } from './dto';
 import { StudentCurriculum } from '../../../entities/student-curriculum.entity';
 import { PROMPT_RECOMMENDATIONS } from './const';
-import { Course } from '../../../entities/course.entity';
+import { StudentCurriculumRecommendationsService } from '../student-curriculum-recommendations/student-curriculum-recommendations.service';
 
 @Injectable()
 export class RecomendationsService {
@@ -26,8 +30,7 @@ export class RecomendationsService {
     @InjectRepository(CourseInCurriculum)
     private readonly courseInCurriculumRepository: Repository<CourseInCurriculum>,
     private readonly openaiService: OpenaiService,
-    @InjectRepository(Course)
-    private readonly courseRepository: Repository<Course>,
+    private readonly studentCurriculumRecommendationsService: StudentCurriculumRecommendationsService,
   ) {}
 
   async generateRecomendation(
@@ -41,8 +44,45 @@ export class RecomendationsService {
       throw new NotFoundException('Student curriculum not found');
     }
 
-    const completedCourses =
-      await this.getCompletedCourses(studentCurriculumId);
+    let recommendationResponse: string = '';
+    const lastValidRecommendation =
+      await this.studentCurriculumRecommendationsService.getLastValidRecommendation(
+        studentCurriculumId,
+      );
+
+    if (lastValidRecommendation) {
+      console.log('✅ Using cached recommendation \n');
+      recommendationResponse = lastValidRecommendation.payload;
+    } else {
+      console.log('✅ Generating new recommendation from AI \n');
+      recommendationResponse =
+        await this.getRecommendationFromAi(studentCurriculum);
+
+      await this.studentCurriculumRecommendationsService.create(
+        studentCurriculumId,
+        recommendationResponse,
+      );
+    }
+
+    const validatedResponse = this.responseToValidatedFormat(
+      recommendationResponse,
+    );
+
+    const courses = await this.getCoursesByCodes(validatedResponse.recommended);
+
+    return {
+      courses,
+      rationale: validatedResponse.why,
+    };
+  }
+
+  private async getRecommendationFromAi(
+    studentCurriculum: StudentCurriculum,
+  ): Promise<string> {
+    const completedCourses = await this.getCompletedCourses(
+      studentCurriculum.id,
+    );
+
     const curriculumCourses = await this.getCurriculumCourses(
       studentCurriculum.curriculumId,
     );
@@ -63,14 +103,11 @@ export class RecomendationsService {
       PROMPT_RECOMMENDATIONS,
     );
 
-    const validatedResponse = this.responseToValidatedFormat(response);
+    if (!response) {
+      throw new BadRequestException('No response received from AI service');
+    }
 
-    const courses = await this.getCoursesByCodes(validatedResponse.recommended);
-
-    return {
-      courses,
-      rationale: validatedResponse.why,
-    };
+    return response;
   }
 
   private async getCompletedCourses(
@@ -109,7 +146,9 @@ export class RecomendationsService {
     response: string | null,
   ): CourseRecommendationResponse {
     if (!response) {
-      throw new Error('No response received from AI service');
+      throw new BadRequestException(
+        'No response received from AI service. Please try again.',
+      );
     }
 
     try {
@@ -122,22 +161,22 @@ export class RecomendationsService {
         !parsedResponse.recommended ||
         !Array.isArray(parsedResponse.recommended)
       ) {
-        throw new Error(
-          'Invalid response format: missing or invalid recommended array',
+        throw new BadRequestException(
+          'Invalid AI response format: missing or invalid recommended courses array',
         );
       }
 
       if (!parsedResponse.why || typeof parsedResponse.why !== 'string') {
-        throw new Error(
-          'Invalid response format: missing or invalid why string',
+        throw new BadRequestException(
+          'Invalid AI response format: missing or invalid rationale explanation',
         );
       }
 
       return parsedResponse;
     } catch (error) {
       if (error instanceof SyntaxError) {
-        throw new Error(
-          `Failed to parse AI response as JSON: ${error.message}`,
+        throw new BadRequestException(
+          `AI service returned invalid JSON format: ${error.message}`,
         );
       }
       throw error;
