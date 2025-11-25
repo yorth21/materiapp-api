@@ -31,6 +31,13 @@ export class ProgramsService {
     });
   }
 
+  async findBySchoolId(schoolId: number): Promise<Program[]> {
+    return this.programsRepository.find({
+      where: { school: { id: schoolId } },
+      relations: ['school'],
+    });
+  }
+
   async update(id: number, updateProgramDto: UpdateProgramDto): Promise<void> {
     await this.programsRepository.update(id, updateProgramDto);
   }

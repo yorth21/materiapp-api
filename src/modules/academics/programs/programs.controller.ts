@@ -35,6 +35,12 @@ export class ProgramsController {
     return this.programsService.findOne(id);
   }
 
+  @Get('school/:schoolId')
+  @Roles('admin', 'student')
+  findBySchoolId(@Param('schoolId', ParseIntPipe) schoolId: number) {
+    return this.programsService.findBySchoolId(schoolId);
+  }
+
   @Patch(':id')
   @Roles('admin')
   update(
