@@ -25,17 +25,40 @@ export class StudentCurriculaService {
 
   async findAll(): Promise<StudentCurriculum[]> {
     return this.studentCurriculumRepository.find({
-      relations: ['user', 'curriculum', 'studentCourses'],
+      relations: ['user', 'curriculum'],
     });
   }
 
   async findOne(id: number): Promise<StudentCurriculum> {
     const studentCurriculum = await this.studentCurriculumRepository.findOne({
       where: { id },
-      relations: ['user', 'curriculum', 'studentCourses'],
+      relations: ['curriculum', 'user', 'studentCourses'],
     });
     if (!studentCurriculum) {
       throw new NotFoundException(`StudentCurriculum with ID ${id} not found`);
+    }
+    return studentCurriculum;
+  }
+
+  async findByUserId(userId: string): Promise<StudentCurriculum[]> {
+    return this.studentCurriculumRepository.find({
+      where: { user: { id: userId } },
+      relations: ['curriculum'],
+    });
+  }
+
+  async findOneByUserId(
+    id: number,
+    userId: string,
+  ): Promise<StudentCurriculum> {
+    const studentCurriculum = await this.studentCurriculumRepository.findOne({
+      where: { id, user: { id: userId } },
+      relations: ['curriculum'],
+    });
+    if (!studentCurriculum) {
+      throw new NotFoundException(
+        `StudentCurriculum with ID ${id} for User ID ${userId} not found`,
+      );
     }
     return studentCurriculum;
   }

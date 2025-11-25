@@ -1,9 +1,22 @@
-import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsUUID,
+  Max,
+  Min,
+} from 'class-validator';
 
 export class CreateStudentCurriculumDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsUUID()
-  userId: string;
+  userId?: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(1)
+  @Max(20)
+  semester: number;
 
   @IsNotEmpty()
   @IsNumber()

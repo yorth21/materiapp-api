@@ -11,6 +11,8 @@ import { StudentCurriculaService } from '../student-curricula/student-curricula.
 import { CreateStudentCurriculumDto } from './dto/create-student-curriculum.dto';
 import { UpdateStudentCurriculumDto } from './dto/update-student-curriculum.dto';
 import { Roles } from 'src/modules/auth/decorators/roles.decorator';
+import { CurrentUser } from 'src/modules/auth/decorators/current-user.decorator';
+import type { ICurrentUser } from 'src/modules/auth/interfaces/current-user.interface';
 
 @Controller('student-curricula')
 export class StudentCurriculaController {
@@ -24,14 +26,41 @@ export class StudentCurriculaController {
     return this.studentCurriculaService.create(createStudentCurriculumDto);
   }
 
-  @Get()
+  @Post('me')
   @Roles('admin', 'student')
+  async createByMe(
+    @Body() createStudentCurriculumDto: CreateStudentCurriculumDto,
+    @CurrentUser() currentUser: ICurrentUser,
+  ) {
+    return this.studentCurriculaService.create({
+      ...createStudentCurriculumDto,
+      userId: currentUser.userId,
+    });
+  }
+
+  @Get()
+  @Roles('admin')
   async findAll() {
     return this.studentCurriculaService.findAll();
   }
 
-  @Get(':id')
+  @Get('me')
   @Roles('admin', 'student')
+  async findByMe(@CurrentUser() currentUser: ICurrentUser) {
+    return this.studentCurriculaService.findByUserId(currentUser.userId);
+  }
+
+  @Get('me/:id')
+  @Roles('admin', 'student')
+  async findOneByMe(
+    @Param('id') id: number,
+    @CurrentUser() currentUser: ICurrentUser,
+  ) {
+    return this.studentCurriculaService.findOneByUserId(id, currentUser.userId);
+  }
+
+  @Get(':id')
+  @Roles('admin')
   async findOne(@Param('id') id: number) {
     return this.studentCurriculaService.findOne(id);
   }
