@@ -19,5 +19,6 @@ import { StudentCurriculaModule } from '../student-curricula/student-curricula.m
   ],
   controllers: [StudentCoursesController],
   providers: [StudentCoursesService],
+  exports: [StudentCoursesService],
 })
 export class StudentCoursesModule {}

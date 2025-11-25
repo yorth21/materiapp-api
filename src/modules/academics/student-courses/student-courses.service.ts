@@ -132,6 +132,17 @@ export class StudentCoursesService {
     });
   }
 
+  async findByStudentCurriculumIdLastChange(
+    studentCurriculumId: number,
+  ): Promise<StudentCourse | null> {
+    return this.studentCoursesRepository.findOne({
+      where: { studentCurriculum: { id: studentCurriculumId } },
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+  }
+
   async findOne(
     studentCurriculumId: number,
     courseInCurriculumId: number,
