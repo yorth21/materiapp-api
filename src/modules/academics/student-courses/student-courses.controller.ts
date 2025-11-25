@@ -24,7 +24,7 @@ export class StudentCoursesController {
   }
 
   @Get()
-  @Roles('admin', 'student')
+  @Roles('admin')
   findAll() {
     return this.studentCoursesService.findAll();
   }
