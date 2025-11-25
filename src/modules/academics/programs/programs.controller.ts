@@ -29,16 +29,16 @@ export class ProgramsController {
     return this.programsService.findAll();
   }
 
-  @Get(':id')
-  @Roles('admin', 'student')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.programsService.findOne(id);
-  }
-
   @Get('school/:schoolId')
   @Roles('admin', 'student')
   findBySchoolId(@Param('schoolId', ParseIntPipe) schoolId: number) {
     return this.programsService.findBySchoolId(schoolId);
+  }
+
+  @Get(':id')
+  @Roles('admin', 'student')
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.programsService.findOne(id);
   }
 
   @Patch(':id')
