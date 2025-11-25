@@ -37,6 +37,12 @@ export class CoursesInCurriculumController {
     return this.coursesInCurriculumService.findOne(id);
   }
 
+  @Get(':curriculumId/curriculum')
+  @Roles('admin', 'student')
+  findByCurriculum(@Param('curriculumId', ParseIntPipe) curriculumId: number) {
+    return this.coursesInCurriculumService.findByCurriculum(curriculumId);
+  }
+
   @Patch(':id')
   @Roles('admin')
   update(
