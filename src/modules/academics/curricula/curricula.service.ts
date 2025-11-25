@@ -35,6 +35,13 @@ export class CurriculaService {
     });
   }
 
+  async findByProgram(programId: number): Promise<Curriculum[]> {
+    return this.curriculaRepository.find({
+      where: { program: { id: programId } },
+      relations: ['program'],
+    });
+  }
+
   async update(
     id: number,
     updateCurriculumDto: UpdateCurriculumDto,

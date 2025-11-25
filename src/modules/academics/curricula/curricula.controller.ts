@@ -29,6 +29,12 @@ export class CurriculaController {
     return this.curriculaService.findAll();
   }
 
+  @Get('program/:programId')
+  @Roles('admin', 'student')
+  findByProgram(@Param('programId', ParseIntPipe) programId: number) {
+    return this.curriculaService.findByProgram(programId);
+  }
+
   @Get(':id')
   @Roles('admin', 'student')
   findOne(@Param('id', ParseIntPipe) id: number) {
