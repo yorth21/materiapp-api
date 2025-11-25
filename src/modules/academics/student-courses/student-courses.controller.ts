@@ -12,6 +12,8 @@ import { StudentCoursesService } from '../student-courses/student-courses.servic
 import { CreateStudentCourseDto } from './dto/create-student-course.dto';
 import { UpdateStudentCourseDto } from './dto/update-student-course.dto';
 import { Roles } from 'src/modules/auth/decorators/roles.decorator';
+import { CurrentUser } from 'src/modules/auth/decorators/current-user.decorator';
+import type { ICurrentUser } from 'src/modules/auth/interfaces/current-user.interface';
 
 @Controller('student-courses')
 export class StudentCoursesController {
@@ -27,6 +29,18 @@ export class StudentCoursesController {
   @Roles('admin')
   findAll() {
     return this.studentCoursesService.findAll();
+  }
+
+  @Get('me/student-curricula/:studentCurriculumId')
+  @Roles('student')
+  findMyByStudentCurriculumId(
+    @CurrentUser() currentUser: ICurrentUser,
+    @Param('studentCurriculumId', ParseIntPipe) studentCurriculumId: number,
+  ) {
+    return this.studentCoursesService.findByStudentCurriculumIdAndUserId(
+      studentCurriculumId,
+      currentUser.userId,
+    );
   }
 
   @Get('student-curriculum/:studentCurriculumId')
