@@ -34,12 +34,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       keycloakId: payload.sub,
       email: payload.email,
       username: payload.preferred_username,
+      firstName: payload.given_name,
+      lastName: payload.family_name,
     };
 
     const user = await this.usersService.findOrCreate(createUserDto);
 
     return {
       userId: user.id,
+      keycloakId: user.keycloakId,
       username: user.username,
       email: user.email,
       roles: payload.realm_access?.roles || [],

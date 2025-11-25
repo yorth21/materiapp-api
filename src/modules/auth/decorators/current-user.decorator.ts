@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { IUser } from '../interfaces/user.interface';
+import { ICurrentUser } from '../interfaces/current-user.interface';
 
 export const CurrentUser = createParamDecorator(
-  (data: keyof IUser | undefined, ctx: ExecutionContext) => {
+  (data: keyof ICurrentUser | undefined, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
     const user = request.user;
 
