@@ -1,11 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudentCourse } from 'src/entities/student-course.entity';
 import { CreateStudentCourseDto } from './dto/create-student-course.dto';
 import { UpdateStudentCourseDto } from './dto/update-student-course.dto';
-import { StudentCurriculum } from 'src/entities/student-curriculum.entity';
 import { CourseInCurriculum } from 'src/entities/course-in-curriculum.entity';
+import { StudentCurriculaService } from '../student-curricula/student-curricula.service';
+import { SyncStudentCourseDto } from './dto/sync-student-course.dto';
 
 @Injectable()
 export class StudentCoursesService {
@@ -13,11 +18,10 @@ export class StudentCoursesService {
     @InjectRepository(StudentCourse)
     private studentCoursesRepository: Repository<StudentCourse>,
 
-    @InjectRepository(StudentCurriculum)
-    private studentCurriculumsRepository: Repository<StudentCurriculum>,
-
     @InjectRepository(CourseInCurriculum)
     private courseInCurriculumsRepository: Repository<CourseInCurriculum>,
+
+    private readonly studentCurriculaService: StudentCurriculaService,
   ) {}
 
   async create(
@@ -31,6 +35,48 @@ export class StudentCoursesService {
     return this.studentCoursesRepository.save(studentCourse);
   }
 
+  async approveOrUnapproveCourse(
+    syncStudentCourseDto: SyncStudentCourseDto,
+    userId: string,
+  ): Promise<void> {
+    const studentCurriculum = await this.studentCurriculaService.findOne(
+      syncStudentCourseDto.studentCurriculumId,
+    );
+
+    if (studentCurriculum.userId !== userId) {
+      throw new ForbiddenException('You do not have access to this resource.');
+    }
+
+    const belongs = await this.courseInCurriculumsRepository.existsBy({
+      id: syncStudentCourseDto.courseInCurriculumId,
+      curriculum: { id: studentCurriculum.curriculumId },
+    });
+
+    if (!belongs) {
+      throw new BadRequestException(
+        'Course does not belong to this curriculum.',
+      );
+    }
+
+    if (!syncStudentCourseDto.isApproved) {
+      await this.studentCoursesRepository.delete({
+        studentCurriculumId: syncStudentCourseDto.studentCurriculumId,
+        courseInCurriculumId: syncStudentCourseDto.courseInCurriculumId,
+      });
+      return;
+    }
+
+    await this.studentCoursesRepository.upsert(
+      {
+        studentCurriculumId: syncStudentCourseDto.studentCurriculumId,
+        courseInCurriculumId: syncStudentCourseDto.courseInCurriculumId,
+      },
+      {
+        conflictPaths: ['studentCurriculumId', 'courseInCurriculumId'],
+      },
+    );
+  }
+
   async findAll(): Promise<StudentCourse[]> {
     return this.studentCoursesRepository.find();
   }
@@ -39,12 +85,11 @@ export class StudentCoursesService {
     studentCurriculumId: number,
     userId: string,
   ): Promise<any> {
-    const studentCurriculum = await this.studentCurriculumsRepository.findOne({
-      where: { id: studentCurriculumId },
-    });
+    const studentCurriculum =
+      await this.studentCurriculaService.findOne(studentCurriculumId);
 
-    if (!studentCurriculum || studentCurriculum.userId !== userId) {
-      throw new NotFoundException('Student curriculum not found');
+    if (studentCurriculum.userId !== userId) {
+      throw new BadRequestException('Access denied for this user.');
     }
 
     return this.courseInCurriculumsRepository

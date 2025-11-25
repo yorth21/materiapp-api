@@ -14,6 +14,7 @@ import { UpdateStudentCourseDto } from './dto/update-student-course.dto';
 import { Roles } from 'src/modules/auth/decorators/roles.decorator';
 import { CurrentUser } from 'src/modules/auth/decorators/current-user.decorator';
 import type { ICurrentUser } from 'src/modules/auth/interfaces/current-user.interface';
+import { SyncStudentCourseDto } from './dto/sync-student-course.dto';
 
 @Controller('student-courses')
 export class StudentCoursesController {
@@ -23,6 +24,18 @@ export class StudentCoursesController {
   @Roles('admin', 'student')
   create(@Body() createStudentCourseDto: CreateStudentCourseDto) {
     return this.studentCoursesService.create(createStudentCourseDto);
+  }
+
+  @Post('approve-or-unapprove')
+  @Roles('admin', 'student')
+  sync(
+    @CurrentUser() currentUser: ICurrentUser,
+    @Body() syncStudentCourseDto: SyncStudentCourseDto,
+  ) {
+    return this.studentCoursesService.approveOrUnapproveCourse(
+      syncStudentCourseDto,
+      currentUser.userId,
+    );
   }
 
   @Get()
