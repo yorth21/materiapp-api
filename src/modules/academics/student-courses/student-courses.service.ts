@@ -109,7 +109,7 @@ export class StudentCoursesService {
             WHEN sc.course_in_curriculum_id IS NULL THEN false 
             ELSE true 
           END`,
-        'isAproved',
+        'isApproved',
       )
       .innerJoin('cic.course', 'c')
       .leftJoin(
