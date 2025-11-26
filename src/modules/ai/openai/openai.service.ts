@@ -14,7 +14,7 @@ export class OpenaiService {
   async ask(prompt: string, systemPrompt: string): Promise<string | null> {
     try {
       const response = await this.openai.chat.completions.create({
-        model: 'gpt-4.1', // Más barato para empezar
+        model: 'gpt-5.1', // Más barato para empezar
         response_format: { type: 'json_object' },
         seed: 42, // Para reproducibilidad
         messages: [
